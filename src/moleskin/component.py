@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC
-from typing import Tuple, Union, Optional
+from typing import Tuple, Union, Optional, Generic
 from pygame import Rect, Color, Surface
 from moleskin.artist import Artist, Form, Artists
 from moleskin.backgrounds.color import BackgroundColorForm, BackgroundColor, BackgroundColorTemplate
@@ -10,7 +10,7 @@ from moleskin.state import State, SelectedState
 from moleskin.template import Template
 
 
-class Component(Artist[State, SelectedState, Form], ABC):
+class Component(Artist[State, SelectedState, Form], ABC, Generic[State, SelectedState, Form]):
     _default_font = 'dejavusans'
     _default_font_size = 11
     _default_antialias = False
@@ -47,7 +47,7 @@ class Component(Artist[State, SelectedState, Form], ABC):
             children,
             layout
         )
-        self._state: State = (self._template, self._background, self._foreground, self._children, self._layout)
+        self._state: ComponentState = (self._template, self._background, self._foreground, self._children, self._layout)
         self._artists: Artists = (self._background, *self._children, *((self._foreground,) if self._foreground else ()))
         self._current_size = self._foreground.size if self._foreground else (0, 0)
         self._current_artist_subsurfaces: Tuple[Surface, ...] = ()
@@ -75,7 +75,7 @@ class Component(Artist[State, SelectedState, Form], ABC):
     def bind_template(self, state: State, component=None):
         super().bind_template(state, self)
 
-    def draw(self, surface, state, component=None):
+    def draw(self, surface, state: State, component=None):
         if not self._current_artist_subsurfaces:
             self._current_size, self._current_artist_subsurfaces = self._organized_artists(surface)
 
@@ -94,7 +94,7 @@ Children = Tuple[
     ...
 ]
 
-State = Tuple[
+ComponentState = Tuple[
     Template,
     Artist,
     Foreground,

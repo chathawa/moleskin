@@ -1,12 +1,8 @@
-from typing import Tuple, TypeVar, Union
+from typing import Tuple, Union
 from pygame import Color
-
 from moleskin.artist import Artist
-from moleskin.state import StateModel
+from moleskin.state import State, SelectedState
 from moleskin.template import FixedFormTemplate, Template
-
-State = TypeVar('State', bound=StateModel)
-SelectedState = TypeVar('SelectedState')
 
 BackgroundColorForm = Tuple[
     Color
