@@ -1,11 +1,9 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod, ABCMeta
 from typing import TypeVar, Generic, Tuple, cast, Callable
-from gui.bases.state import StateModel
+from moleskin.state import State, StateModel, SelectedState
 
-State = TypeVar('State', bound=StateModel)
-SelectedState = TypeVar('SelectedState')
-Form = TypeVar('Form', bound=Tuple)
+Form = TypeVar('Form', bound=tuple)
 
 
 class TemplateMeta(ABCMeta):
@@ -87,4 +85,4 @@ class FixedFormTemplate(
         return self._form
 
 
-__all__ = ['Template', 'FixedFormTemplate']
+__all__ = ['Form', 'Template', 'FixedFormTemplate']

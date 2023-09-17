@@ -1,21 +1,13 @@
 from __future__ import annotations
-
 from abc import ABC
-from typing import Tuple, TypeVar, Generic, Union, Optional
-
+from typing import Tuple, Union, Optional
 from pygame import Rect, Color, Surface
-
-from gui.bases.artist import Artists, Artist
-from gui.bases.backgrounds.color import BackgroundColor, BackgroundColorTemplate, BackgroundColorForm
-from gui.bases.foreground import Foreground, ForegroundForm, ForegroundTemplate, LeftAlignment
-from gui.bases.layout import *
-from gui.bases.layouts.grid import GridLayout
-from gui.bases.state import StateModel
-from gui.bases.template import Template
-
-State = TypeVar('State', bound=StateModel)
-SelectedState = TypeVar('SelectedState')
-Form = TypeVar('Form')
+from moleskin.artist import Artist, Form, Artists
+from moleskin.backgrounds.color import BackgroundColorForm, BackgroundColor, BackgroundColorTemplate
+from moleskin.foreground import LeftAlignment, ForegroundForm, ForegroundTemplate, Foreground
+from moleskin.layout import Layout, Size, Sizes
+from moleskin.state import State, SelectedState
+from moleskin.template import Template
 
 
 class Component(Artist[State, SelectedState, Form], ABC):
@@ -65,7 +57,10 @@ class Component(Artist[State, SelectedState, Form], ABC):
         Tuple[Rect, ...]
     ]:
         child_sizes: Sizes = tuple(child._current_size for child in self._children)
-        size, child_positions = self._layout.arrange(screen, child_sizes) if self._layout else (self._foreground.size, ())
+        size, child_positions = (
+            self._layout.arrange(screen, child_sizes) if self._layout else
+            (self._foreground.size, ())
+        )
         return size, tuple(Rect(*position, *size) for position, size in zip(
             (self._origin, *child_positions, self._origin),
             (size, *child_sizes, size)

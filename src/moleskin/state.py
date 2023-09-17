@@ -1,5 +1,5 @@
 from abc import ABC, ABCMeta
-from typing import Protocol, Generic, TypeVar
+from typing import Protocol, TypeVar
 
 
 class StateModelMeta(ABCMeta):
@@ -11,11 +11,12 @@ class StateModel(ABC, metaclass=StateModelMeta):
 
 
 State = TypeVar('State', bound=StateModel)
+SelectedState = TypeVar('SelectedState')
 
 
-class Selector(Protocol[State]):
-    def __call__(self, state: State):
+class Selector(Protocol[State, SelectedState]):
+    def __call__(self, state: State) -> SelectedState:
         pass
 
 
-__all__ = ['StateModelMeta', 'StateModel', 'Selector']
+__all__ = ['StateModelMeta', 'StateModel', 'State', 'SelectedState', 'Selector']

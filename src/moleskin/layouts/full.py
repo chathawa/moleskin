@@ -1,4 +1,4 @@
-from gui.bases.layout import Layout
+from moleskin.layout import Layout
 
 
 class FullLayout(Layout):

@@ -1,9 +1,7 @@
 from __future__ import annotations
-
 from itertools import accumulate
 from typing import Dict, List
-
-from gui.bases.layout import Layout, Size
+from moleskin.layout import Layout, Size
 
 
 class GridLayout(Layout):

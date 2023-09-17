@@ -2,15 +2,15 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Tuple, Union
 from pygame import Color
-from gui.bases.artist import Artist
-from gui.bases.component import Component
-from gui.bases.template import FixedFormTemplate
-from gui.game.main.state import MainMenuState
+
+from moleskin.artist import Artist
+from moleskin.component import Component
+from moleskin.state import State
+from moleskin.template import FixedFormTemplate, SelectedState
 
 InitialColor = Color
 PressedColor = Color
 
-ButtonSelectedState = None
 ButtonForm = Tuple[
     InitialColor,
     PressedColor
@@ -23,7 +23,7 @@ class ButtonBackgroundTemplate(FixedFormTemplate[ButtonForm]):
         super().__init__(self._initial_color, self._pressed_color)
 
 
-class ButtonBackground(Artist[MainMenuState, ButtonSelectedState, ButtonForm]):
+class ButtonBackground(Artist[State, SelectedState, ButtonForm]):
     def draw(self, surface, form: ButtonForm, button: Button):
         initial_color, pressed_color = form
         surface.fill(pressed_color if button.is_pressed else initial_color)

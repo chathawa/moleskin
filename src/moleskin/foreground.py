@@ -1,16 +1,11 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, Tuple, Union, Dict, cast
-
+from typing import Tuple, Union, Dict, cast
 import pygame.font
 from pygame import Color, Surface
 from pygame.font import Font
-from gui.bases.artist import Artist
-from gui.bases.state import StateModel
-from gui.bases.template import Template, FixedFormTemplate
-
-State = TypeVar('State', bound=StateModel)
-SelectedState = TypeVar('SelectedState')
+from moleskin.artist import Artist
+from moleskin.template import FixedFormTemplate
 
 Text = str
 Antialias = bool

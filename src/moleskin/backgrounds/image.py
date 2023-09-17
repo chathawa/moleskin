@@ -1,14 +1,12 @@
-from abc import ABC
 from os import getenv
 from pathlib import Path
-from typing import TypeVar, Tuple, Generic, Literal, get_args, cast, Union
+from typing import Tuple, Literal, get_args, cast, Union, Generic
+import pygame
 from PIL.Image import Image
-from pygame import Surface
-import pygame.image
-from gui.bases.artist import Artist
-from gui.bases.state import StateModel
-from gui.bases.template import Template, FixedFormTemplate
-from gui.performance.images import ImageCache
+from moleskin.artist import Artist
+from moleskin.performance.images import ImageCache
+from moleskin.state import State, SelectedState
+from moleskin.template import FixedFormTemplate, Template, Form
 
 BackgroundImageForm = Tuple[
     Image
@@ -29,7 +27,7 @@ class BackgroundImageTemplate(
 SupportedImageFormat = Literal['P', 'RGB', 'RGBX', 'RGBA', 'ARGB', 'BGRA']
 
 
-class BackgroundImage(Artist[StateModel, None]):
+class BackgroundImage(Artist[State, SelectedState, Form], Generic[State, SelectedState, Form]):
     _supported_image_formats: Tuple[SupportedImageFormat, ...] = get_args(SupportedImageFormat)
 
     @classmethod
@@ -46,8 +44,7 @@ class BackgroundImage(Artist[StateModel, None]):
     def __init__(self, template: Union[str, Image, BackgroundImageTemplate]):
         super().__init__(template if isinstance(template, Template) else BackgroundImageTemplate(template))
 
-
-    def draw(self, surface, form: BackgroundImageForm):
+    def draw(self, surface, form: BackgroundImageForm, component):
         image, = form
         surface.blit(self._convert_pil_image(image), self._origin)
 

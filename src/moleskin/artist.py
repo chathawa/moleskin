@@ -1,13 +1,9 @@
 from abc import ABC, abstractmethod
-from typing import Tuple, TypeVar, Generic
+from typing import Tuple, Generic
 from pygame import Surface
-from gui.bases.layout import Position
-from gui.bases.state import StateModel
-from gui.bases.template import Template
-
-State = TypeVar('State', bound=StateModel)
-SelectedState = TypeVar('SelectedState')
-Form = TypeVar('Form')
+from moleskin.layout import Position
+from moleskin.state import State, SelectedState
+from moleskin.template import Template, Form
 
 
 class Artist(ABC, Generic[State, SelectedState, Form]):
@@ -34,4 +30,4 @@ class Artist(ABC, Generic[State, SelectedState, Form]):
 Artists = Tuple[Artist, ...]
 
 
-__all__ = ['Artist', 'Artists']
+__all__ = ['Form', 'Artist', 'Artists']

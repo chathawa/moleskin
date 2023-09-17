@@ -1,8 +1,9 @@
 from typing import Tuple, TypeVar, Union
 from pygame import Color
-from gui.bases.artist import Artist
-from gui.bases.state import StateModel
-from gui.bases.template import Template, FixedFormTemplate
+
+from moleskin.artist import Artist
+from moleskin.state import StateModel
+from moleskin.template import FixedFormTemplate, Template
 
 State = TypeVar('State', bound=StateModel)
 SelectedState = TypeVar('SelectedState')

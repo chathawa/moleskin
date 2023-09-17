@@ -1,7 +1,7 @@
 import re
 from pathlib import Path
 from sys import getsizeof
-from typing import Union, Dict, Pattern, List, Tuple
+from typing import Union, Dict, List, Tuple
 
 from PIL import Image
 
